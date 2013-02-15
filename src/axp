@@ -1,5 +1,6 @@
 #!/usr/bin/python
 
+import os
 import sys
 import tty
 import termios
@@ -127,7 +128,7 @@ def parseConfig(path):
 
 # check for config file
 if len(sys.argv) != 1+1:
-    print sys.argv[0] + " <config.xml>"
+    print os.path.basename(sys.argv[0]) + " <config.xml>"
     sys.exit(1)
 
 # parse it
