@@ -1,0 +1,4 @@
+# high
+mplayer -user "user" -passwd "xxx" "rtsp://1.2.3.4/11"
+# low
+mplayer -user "user" -passwd "xxx" "rtsp://1.2.3.4/12"

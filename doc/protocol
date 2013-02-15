@@ -1,0 +1,2 @@
+# help
+wget -q -O - "http://1.2.3.4/web/cgi-bin/hi3510/ptzctrl.cgi?-?"
