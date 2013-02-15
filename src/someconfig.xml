@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<AxpLinCam>
+  <user>myusername</user>
+  <pass>mysecretpassword</pass>
+  <host>1.2.3.4</host>
+</AxpLinCam>
