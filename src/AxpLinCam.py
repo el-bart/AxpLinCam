@@ -7,19 +7,19 @@ class Camera:
         self.__user = user
         self.__pass = password
 
-    def up(self, multi):
+    def up(self, multi=False):
         print "up"
         return True
 
-    def down(self, multi):
+    def down(self, multi=False):
         print "down"
         return True
 
-    def left(self, multi):
+    def left(self, multi=False):
         print "left"
         return True
 
-    def right(self, multi):
+    def right(self, multi=False):
         print "right"
         return True
 

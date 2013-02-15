@@ -19,6 +19,7 @@ def getChar():
 
 
 def printHelp():
+    print ""
     print "move step-by-step:"
     print "\tw - up (alt: arrow up)"
     print "\ts - down (alt: arrow down)"
@@ -36,6 +37,7 @@ def printHelp():
     print "\tx - home (alt: home button)"
     print ""
     print "NOTE: arrows can be used instead of w-s-a-d keys"
+    print ""
 
 
 def processAction(cam):
