@@ -31,7 +31,7 @@ def printHelp():
     print "\tA - left"
     print "\tD - right"
     print "misc:"
-    print "\tc - close"
+    print "\tc - close (alt: ctrl+C)"
     print "\th - help"
     print "\tz - stop (alt: space bar)"
     print "\tx - home (alt: home button)"
@@ -132,6 +132,10 @@ cam = AxpLinCam.Camera(user=user, password=password, host=host)
 
 # show user what are the options
 printHelp()
+print "for video type:"
+print "\tmplayer -user \"" + user + "\" -passwd \"xxxx\" \"rtsp://" + host + "/11  # high resolution"
+print "\tmplayer -user \"" + user + "\" -passwd \"xxxx\" \"rtsp://" + host + "/12  # low resolution"
+print ""
 
 # main loop (can be braked from the internal call
 while True:
