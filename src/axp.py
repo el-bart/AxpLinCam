@@ -7,6 +7,7 @@ import xml.dom.minidom
 import AxpLinCam
 
 
+# helper function that returns key that has been pressed
 def getChar():
     fd = sys.stdin.fileno()
     old_settings = termios.tcgetattr(fd)
@@ -18,6 +19,7 @@ def getChar():
     return ch
 
 
+# call to print help message on the screen
 def printHelp():
     print ""
     print "move step-by-step:"
@@ -40,6 +42,7 @@ def printHelp():
     print ""
 
 
+# main part - processes an user-requested action
 def processAction(cam):
 
     # read the key
@@ -105,9 +108,11 @@ def processAction(cam):
     raise Exception("unknown key: '" + c + "' (" + str(ord(c)) + ")" )
 
 
+# gets the content of a given node (shorter notation)
 def getXmlNode(node, name):
     return node.getElementsByTagName(name)[0].childNodes[0].nodeValue
 
+# parses config file and returns tuple with host, user and pass
 def parseConfig(path):
     cfg = xml.dom.minidom.parse(path)
     h   = getXmlNode(cfg, 'host')
