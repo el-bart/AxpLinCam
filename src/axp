@@ -8,16 +8,30 @@ import xml.dom.minidom
 import AxpLinCam
 
 
-# helper function that returns key that has been pressed
-def getChar():
-    fd = sys.stdin.fileno()
-    old_settings = termios.tcgetattr(fd)
-    try:
-        tty.setraw(fd)
-        ch = sys.stdin.read(1)
-    finally:
-        termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
-    return ch
+# helper class that returns key that has been pressed
+class StdInput:
+    # return char from stdin
+    def getChar(self):
+        fd = sys.stdin.fileno()
+        old_settings = termios.tcgetattr(fd)
+        try:
+            tty.setraw(fd)
+            ch = sys.stdin.read(1)
+        finally:
+            termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
+        return ch
+
+# helper class that returns key, by means of pre-defined values
+class PreDefinedInput:
+    # save commands to execute
+    def __init__(self, cmds):
+        self.__cmds = list(cmds)
+
+    # return next saved char, or 'c' (close) if no more chars are present
+    def getChar(self):
+        if len(self.__cmds) == 0:
+            return 'c'
+        return self.__cmds.pop(0)
 
 
 # call to print help message on the screen
@@ -47,10 +61,10 @@ def printHelp():
 
 
 # main part - processes an user-requested action
-def processAction(cam):
+def processAction(cam, cmdInput):
 
     # read the key
-    c = getChar()
+    c = cmdInput.getChar()
 
     # check basic directions
     if c == 'w':
@@ -95,7 +109,7 @@ def processAction(cam):
         sys.exit(0)
     # check for special keys
     if ord(c) == 27:    # 27 is escape
-        c = getChar()
+        c = cmdInput.getChar()
 
         # check for contorl keys
         if c == 'H':
@@ -103,7 +117,7 @@ def processAction(cam):
 
         # check for arrows
         if c == '[':
-            c = getChar()
+            c = cmdInput.getChar()
             if c == 'A':
                 return cam.up()
             if c == 'B':
@@ -136,14 +150,19 @@ def parseConfig(path):
 #
 
 # check for config file
-if len(sys.argv) != 1+1:
-    print os.path.basename(sys.argv[0]) + " <config.xml>"
+if len(sys.argv) != 1+1 and len(sys.argv) != 1+2:
+    print os.path.basename(sys.argv[0]) + " <config.xml> [<cmd-seq>]"
     sys.exit(1)
 
 # parse it
 host, user, password = parseConfig(sys.argv[1])
 # init video camera device
 cam = AxpLinCam.Camera(user=user, password=password, host=host)
+# init input
+if len(sys.argv) == 1+2:
+    cmdInput = PreDefinedInput(sys.argv[2])
+else:
+    cmdInput = StdInput()
 
 # show user what are the options
 printHelp()
@@ -155,6 +174,6 @@ print ""
 # main loop (can be braked from the internal call
 while True:
     try:
-        processAction(cam)
+        processAction(cam, cmdInput)
     except Exception as ex:
         print "ERROR: " + str(ex)
