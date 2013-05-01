@@ -165,6 +165,7 @@ else:
     cmdInput = StdInput()
 
 # show user what are the options
+print "AxpLinCam v1.1.0 - linux AXP IP camera driver for by BaSz"
 printHelp()
 print "for video type:"
 print "\tmplayer -user \"" + user + "\" -passwd \"xxxx\" \"rtsp://" + host + "/11\"  # high resolution"
