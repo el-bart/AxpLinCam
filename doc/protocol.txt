@@ -1,2 +1,5 @@
-# help
+# help - movement
 wget -q -O - "http://1.2.3.4/web/cgi-bin/hi3510/ptzctrl.cgi?-?"
+# IR leds on/off
+wget -q -O - "http://1.2.3.4/web/cgi-bin/hi3510/param.cgi?cmd=setinfra&-status=open"
+wget -q -O - "http://1.2.3.4/web/cgi-bin/hi3510/param.cgi?cmd=setinfra&-status=close"
