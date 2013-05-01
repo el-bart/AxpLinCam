@@ -12,35 +12,51 @@ class Camera:
         self.__user = user
         self.__pass = password
 
-    # moves
+    # basic moves
     def up(self, multi=False):
-        self.__action("up",   0 if multi else 1)
+        self.__moveAction("up",   0 if multi else 1)
     def down(self, multi=False):
-        self.__action("down", 0 if multi else 1)
+        self.__moveAction("down", 0 if multi else 1)
     def left(self, multi=False):
-        self.__action("left", 0 if multi else 1)
+        self.__moveAction("left", 0 if multi else 1)
     def right(self, multi=False):
-        self.__action("right", 0 if multi else 1)
+        self.__moveAction("right", 0 if multi else 1)
 
-    # misc commands
+    # misc move commands
     def home(self):
-        self.__action("home", None)
+        self.__moveAction("home", None)
     def stop(self):
-        self.__action("stop", None)
+        self.__moveAction("stop", None)
+
+    # IR LEDs control
+    def irLed(self, on):
+        self.__irLedAction(on)
 
 
     # actual implementation
-    def __action(self, act, step):
+    def __moveAction(self, act, step):
         # basic link with the command
-        link = "http://" + self.__host + "/web/cgi-bin/hi3510/ptzctrl.cgi?-act=" + act
+        cmd = "ptzctrl.cgi?-act=" + act
         # is direct move command?
         if step is not None:
-            link += "&-step=" + str(step)
+            cmd += "&-step=" + str(step)
+        self.__action(cmd, '[Success]call ptz funtion ok')
+
+    # implementation of working with IR LEDs
+    def __irLedAction(self, on):
+        # basic link with the command
+        mode = "open" if on else "close"
+        cmd  = "param.cgi?cmd=setinfra&-status=" + mode
+        self.__action(cmd, '')
+
+    # common command processing code
+    def __action(self, command, response):
+        link = "http://" + self.__host + "/web/cgi-bin/hi3510/" + command
         # send the request
         r = requests.get(link)
         # ensure it didn't failed
         r.raise_for_status()
         # check the response
         txt = ' '.join( r.text.splitlines() ).encode("utf-8")
-        if txt != '[Success]call ptz funtion ok':
+        if txt != response:
             raise Exception( "invalid/unknown reponse from '" + self.__host + "': " + txt )

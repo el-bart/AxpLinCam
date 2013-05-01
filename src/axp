@@ -38,6 +38,9 @@ def printHelp():
     print "\th - help"
     print "\tz - stop (alt: space bar)"
     print "\tx - home (alt: home button)"
+    print "IR LEDs:"
+    print "\tL - turn on"
+    print "\tl - turn off"
     print ""
     print "NOTE: arrows can be used instead of w-s-a-d keys"
     print ""
@@ -80,6 +83,12 @@ def processAction(cam):
     if c == 'h':
         printHelp()
         return True
+
+    # IR LEDs control
+    if c == 'L':
+        return cam.irLed(True)
+    if c == 'l':
+        return cam.irLed(False)
 
     # signal?
     if ord(c) == 3:     # ctrl+C
