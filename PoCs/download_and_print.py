@@ -5,7 +5,7 @@ import requests
 if len(sys.argv)==2:
     link=sys.argv[1]
 else:
-    link="http://www.baszerr.eu"
+    link="https://www.baszerr.eu"
 
 r = requests.get(link)
 
