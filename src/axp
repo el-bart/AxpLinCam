@@ -173,6 +173,9 @@ print "\tmplayer -user \"" + user + "\" -passwd \"xxxx\" \"rtsp://" + host + "/1
 print "\tvlc --network-caching=200 --rtsp-user=\"" + user + "\" --rtsp-pwd=\"xxxx\" \"rtsp://eyeofthebeholder-wifi/11\"  # high resolution"
 print "\tvlc --network-caching=200 --rtsp-user=\"" + user + "\" --rtsp-pwd=\"xxxx\" \"rtsp://eyeofthebeholder-wifi/12\"  # low resolution"
 print ""
+print "for video recording:"
+print "\tvlc --intf dummy --sout='#standard{access=file,mux=mp4,dst=test_output.mp4}' [...]"
+print ""
 
 # main loop (can be braked from the internal call
 while True:
