@@ -170,6 +170,8 @@ printHelp()
 print "for video type:"
 print "\tmplayer -user \"" + user + "\" -passwd \"xxxx\" \"rtsp://" + host + "/11\"  # high resolution"
 print "\tmplayer -user \"" + user + "\" -passwd \"xxxx\" \"rtsp://" + host + "/12\"  # low resolution"
+print "\tvlc --network-caching=200 --rtsp-user=\"" + user + "\" --rtsp-pwd=\"xxxx\" \"rtsp://eyeofthebeholder-wifi/11\"  # high resolution"
+print "\tvlc --network-caching=200 --rtsp-user=\"" + user + "\" --rtsp-pwd=\"xxxx\" \"rtsp://eyeofthebeholder-wifi/12\"  # low resolution"
 print ""
 
 # main loop (can be braked from the internal call
