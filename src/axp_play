@@ -1,0 +1,32 @@
+#!/bin/bash
+set -eu -o pipefail
+
+if [ $# -ne 2 ]
+then
+  echo "$0 <config.sh> {high|low}" >&2
+  exit 2
+fi
+
+CFG=$1
+RES=$2
+shift 2
+
+source "$CFG"
+
+case "$RES" in
+  "high")
+    STRM=11
+  ;;
+  "low")
+    STRM=12
+  ;;
+  *)
+    exec "$0" --help
+  ;;
+esac
+
+exec vlc \
+  --network-caching=200 \
+  --rtsp-user="$USERNAME" \
+  --rtsp-pwd="$PASSWORD" \
+  "rtsp://eyeofthebeholder-wifi/$STRM"
